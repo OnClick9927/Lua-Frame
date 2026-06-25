@@ -33,10 +33,14 @@ function ValueContainer:SetValueAsFunc(_baseType, _type, ...)
     end
 end
 
----@param _type LuaType 需求的类型
+---@param _type LuaType|string 需求的类型
 ---@param ... any 其他参数
 ---@return table|nil
 function ValueContainer:GetValue(_type, ...)
+    if type(_type) == LuaDataType.String then
+        _type = Tools.GetType(_type)
+    end
+
     local clsName = _type.__clsName
     local result = self.Container[clsName]
     if result then
